@@ -2,11 +2,13 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 
 import { db } from "@/db";
+import * as schema from "@/db/schema";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: "pg", // or "pg" or "mysql será pg pois estamos usando o postgree
     usePlural: true, //para usar plural no nome das tabelas
+    schema,
   }),
   user: {
     modelName: "usersTable", //para usar o nome da tabela users
@@ -21,4 +23,7 @@ export const auth = betterAuth({
     modelName: "verificationsTable", //para usar o nome da tabela verifications
   },
   //... the rest of your config
+  emailAndPassword: {
+    enabled: true,
+  },
 });
